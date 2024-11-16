@@ -104,7 +104,7 @@ class SupplierDAL extends AbstractionDAL
 
               // Sử dụng câu truy vấn có điều kiện tìm kiếm dựa vào $str
               $string = "SELECT * FROM Supplier 
-                     WHERE  codeSupplier LIKE '%$str %'
+                     WHERE  codeSupplier LIKE '%$str%'
               ";
 
               // Thực hiện truy vấn

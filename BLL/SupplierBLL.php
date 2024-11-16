@@ -245,5 +245,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $temp = $check->searchSupplier($str);
             echo json_encode($temp);
             break;
+
+
+            // CACH BẢO MẬT
+        // case 'searchSupplier':
+        //     // Kiểm tra và lọc dữ liệu đầu vào
+        //     $str = $_POST['str'];
+        
+        //     // Loại bỏ các ký tự nguy hiểm
+        //     $str = htmlspecialchars(strip_tags($str)); 
+        
+        //     // Gọi tới DAL qua BLL
+        //     $temp = $check->searchSupplier($str);
+        //     echo json_encode($temp);
+        //     break;
     }
 }

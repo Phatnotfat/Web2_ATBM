@@ -102,10 +102,28 @@ class SupplierDAL extends AbstractionDAL
               // Mảng để lưu trữ các đối tượng
               $array_list = array();
 
+              
+
               // Sử dụng câu truy vấn có điều kiện tìm kiếm dựa vào $str
               $string = "SELECT * FROM Supplier 
                      WHERE  codeSupplier LIKE '%$str%'
               ";
+
+              //  BẢO MẬT CÁCH 1
+              // $stmt = $this->actionSQL->prepare("SELECT * FROM Supplier WHERE codeSupplier LIKE ?");
+              // $searchTerm = "%$str%";
+              // $stmt->bind_param("s", $searchTerm);
+              // $stmt->execute();
+              // $result = $stmt->get_result();
+
+
+              // BẢO MẬT CÁCH 2
+              // $str = mysqli_real_escape_string($this->actionSQL, $str);
+
+              // $string = "SELECT * FROM Supplier
+              //        WHERE  codeSupplier LIKE '%$str%'
+              // ";
+
 
               // Thực hiện truy vấn
               $result = $this->actionSQL->query($string);

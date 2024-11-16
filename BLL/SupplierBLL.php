@@ -149,38 +149,45 @@ class SupplierBLL
 
     // Tìm kiếm
     function searchSupplier($str)
-    {
-        $arr = $this->SupplierDAL->getListObj();
-        $result = array();
-        if (count($arr) > 0) {
-            foreach ($arr as $item) {
-                $codeSupplier = $item->getCodeSupplier();
-                $nameSupplier = $item->getNameSupplier();
-                $address = $item->getAddress();
-                $email = $item->getEmail();
-                $brandSupplier = $item->getBrandSupplier();
-                $phoneNumber = $item->getPhoneNumber();
+{
+    // Gọi hàm getListObj($str) trong DAL để lấy danh sách nhà cung cấp thỏa mãn điều kiện tìm kiếm
+    $arr = $this->SupplierDAL->getListResultSearch($str);
+    
+    
+    $result = array();
 
-                // Kiểm tra nếu chuỗi $str xuất hiện trong bất kỳ trường nào của đối tượng
-                if (
-                    strpos(strtolower($nameSupplier), $str) !== false || strpos(strtolower($codeSupplier), $str) !== false  ||
-                    strpos(strtolower($phoneNumber), $str) !== false || strpos(strtolower($address), $str) !== false || strpos(strtolower($email), $str) !== false || strpos(strtolower($brandSupplier), $str) !== false
-                ) {
-                    $obj = array(
-                        "codeSupplier" => $codeSupplier,
-                        "nameSupplier" => $nameSupplier,
-                        "address" => $address,
-                        "email" => $email,
-                        "brandSupplier" => $brandSupplier,
-                        "phoneNumber" => $phoneNumber,
-                        "mess" => "success",
-                    );
-                    array_push($result, $obj);
-                }
-            }
-        }
-        return $result;
+    // Kiểm tra nếu DAL trả về null
+    if ($arr === null || count($arr) === 0) {
+        // Trả về thông báo lỗi hoặc trạng thái không có dữ liệu
+        return array("mess" => "No data found");
     }
+
+    if (count($arr) > 0) {
+        foreach ($arr as $item) {
+            $codeSupplier = $item->getCodeSupplier();
+            $nameSupplier = $item->getNameSupplier();
+            $address = $item->getAddress();
+            $email = $item->getEmail();
+            $brandSupplier = $item->getBrandSupplier();
+            $phoneNumber = $item->getPhoneNumber();
+
+            // Tạo đối tượng kết quả
+            $obj = array(
+                "codeSupplier" => $codeSupplier,
+                "nameSupplier" => $nameSupplier,
+                "address" => $address,
+                "email" => $email,
+                "brandSupplier" => $brandSupplier,
+                "phoneNumber" => $phoneNumber,
+                "mess" => "success",
+            );
+            array_push($result, $obj);
+        }
+    }
+    return $result;
+}
+
+
 }
 
 

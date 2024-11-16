@@ -144,6 +144,7 @@ class ShirtProductDAL extends AbstractionDAL
 
               // Kiểm tra số hàng được trả về
               if ($result->num_rows > 0) {
+                     
                      // Lấy dữ liệu từ hàng kết quả
                      $data = $result->fetch_assoc();
                      $productCode = $data["productCode"];

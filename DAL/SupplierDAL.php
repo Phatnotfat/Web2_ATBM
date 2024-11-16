@@ -97,6 +97,50 @@ class SupplierDAL extends AbstractionDAL
               }
        }
 
+       function getListResultSearch($str)
+       {
+              // Mảng để lưu trữ các đối tượng
+              $array_list = array();
+
+              // Sử dụng câu truy vấn có điều kiện tìm kiếm dựa vào $str
+              $string = "SELECT * FROM Supplier 
+                     WHERE  codeSupplier LIKE '%$str%'
+              ";
+
+              // Thực hiện truy vấn
+              $result = $this->actionSQL->query($string);
+
+              // Kiểm tra số hàng được trả về
+              if ($result->num_rows > 0) {
+                     // Lặp qua các dòng kết quả và thêm vào mảng
+                     while ($data = $result->fetch_assoc()) {
+                            $codeSupplier = $data['codeSupplier'];
+                            $nameSupplier = $data['nameSupplier'];
+                            $address = $data['address'];
+                            $email = $data['email'];
+                            $brandSupplier = $data['brandSupplier'];
+                            $phoneNumber = $data['phoneNumber'];
+
+                            // Tạo đối tượng SupplierDTO và thêm vào mảng
+                            $supplier = new SupplierDTO(
+                                   $codeSupplier,
+                                   $nameSupplier,
+                                   $address,
+                                   $email,
+                                   $brandSupplier,
+                                   $phoneNumber
+                            );
+                            array_push($array_list, $supplier);
+                     }
+                     return $array_list;
+              } else {
+                     // Trường hợp không có dữ liệu trả về
+                     return null;
+              }
+       }
+
+
+
        // lấy ra một đối tượng dựa theo mã đối tượng
        function getObj($code)
        {
